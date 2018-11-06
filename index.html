@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>Favorite foods</title>
+  <style type="text/css">
+    button,
+    div,
+    form,
+    input {
+      margin: 10px;
+    }
+    .displayDiv {
+      float: left;
+      width: 33;
+    }
+    *{
+      margin: 0 auto;
+      font-family: 'Righteous', cursive;
+    }
+    .page-header {
+      font-size: 36px;
+      text-align: center;
+      background-image: url("./Images/background.jpg");
+      height: 100px;
+      background-size: 100%;
+      font-family: 'Luckiest Guy', cursive;
+    }
+    .page-header h1{
+      padding-top: 25px;
+    }
+    #menu{
+      float: left;
+      width: 10%;
+      /* margin: 1px 4px 5px 0; */
+      border: 1px solid black;
+      width: 12%;
+      text-align: center;
+    }
+    #buttons-view{
+      margin: 26px 0;
+     }
+     button {
+      cursor:pointer;
+     }
+  
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <div class="page-header"><h1>Foodiphy</h1></div>
+
+    <!-- Buttons will Get Dumped Here -->
+    <div id="menu"> <h3>Menu</h3> </div>
+    <div id="buttons-view"></div>
+    
+    <form id="food-form">
+      <label for="food-input">Add Your favorite food!</label>
+      <input type="text" id="food-input">
+
+      <!-- Button triggers new food to be added -->
+      <button id="add-food" type="submit" value="Into The Menu!" > Into The Menu!<i class='fas fa-cookie-bite' style='font-size:15px'></i></button>
+      
+    </form>
+    <div id="food-view"></div>
+
+        <!-- google fonts -->
+        <link href="https://fonts.googleapis.com/css?family=Luckiest+Guy|Righteous" rel="stylesheet">
+        <!-- link to bootstrap -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script> 
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+          <!-- font awesome -->
+          <link rel='stylesheet' href='https://use.fontawesome.com/releases/v5.5.0/css/all.css' integrity='sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU' crossorigin='anonymous'>
+
+        <!-- link to jQuery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+      // Initial array of foods
+      var foods = ["Chicken Wings", "Seafood", "Pasta","Steak"];
+
+      // Function for dumping the JSON content for each button into the div
+      function displayfoodInfo() {
+var foodRef;
+        // YOUR CODE GOES HERE!!! HINT: You will need to create a new div to hold the JSON.
+//adding JSON
+
+  foodRef =  $(this).attr("data-name");
+  console.log(foodRef);
+
+
+// Here we construct our URL
+var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +foodRef + "&api_key=Jx5HQQ2iUxEKCavBkuKcVI4yvipzVMRu";
+
+$.ajax({
+url: queryURL,
+method: "GET"
+}) .then(function(response) {
+          var results = response.data;
+
+             
+          for (var i = 0; i < results.length; i++) {
+            
+            var gifDiv = $('<div>',{ 'class': 'displayDiv' });
+            var rating = results[i].rating;
+
+            var p = $("<p>").text("Rating: " + rating);
+
+            var foodImage = $("<img>");
+            foodImage.attr("src", results[i].images.fixed_height.url);
+
+            gifDiv.append(p);
+            gifDiv.append(foodImage);
+
+            $("#food-view").prepend(gifDiv);
+          }
+        });
+
+      }
+
+      // Function for displaying food data
+      function renderButtons() {
+
+        // Deleting the buttons prior to adding new foods
+        // (this is necessary otherwise you will have repeat buttons)
+        $("#buttons-view").empty();
+
+        // Looping through the array of foods
+        for (var i = 0; i < foods.length; i++) {
+
+          // Then dynamicaly generating buttons for each food in the array
+          // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+          var a = $("<button>");
+          // Adding a class of food to our button
+          a.addClass("food");
+          // Adding a data-attribute
+          a.attr("data-name", foods[i]);
+          // Providing the initial button text
+          a.text(foods[i]);
+          // Adding the button to the buttons-view div
+          $("#buttons-view").append(a);
+        }
+      }
+
+      // This function handles events where one button is clicked
+      $("#add-food").on("click", function(event) {
+        event.preventDefault();
+
+        // This line grabs the input from the textbox
+        var food = $("#food-input").val().trim();
+
+        // The food from the textbox is then added to our array
+        foods.push(food);
+
+        // Calling renderButtons which handles the processing of our food array
+        renderButtons();
+
+      });
+
+      // Generic function for displaying the foodInfo
+      $(document).on("click", ".food", displayfoodInfo);
+
+      // Calling the renderButtons function to display the intial buttons
+      renderButtons();
+
+      
+    </script>
+  </div>
+</body>
+
+</html>
