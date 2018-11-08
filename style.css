@@ -1,0 +1,92 @@
+button,
+div,
+form,
+input {
+  margin: 10px;
+}
+.displayDiv {
+  float: left;
+  width: 33%;
+}
+*{
+  margin: 0 auto;
+  font-family: 'Righteous', cursive;
+}
+.page-header {
+  font-size: 36px;
+  text-align: center;
+  background-image: url("./Images/food.jpg");
+  height: 160px;
+  background-size: 100%;
+  font-family: 'Luckiest Guy', cursive;
+  /* margin-left: 36px; */
+}
+.page-header h1{
+  padding-top: 30px;
+ 
+}
+#menu{
+  float: left;
+  width: 76px;
+  /* margin: 1px 4px 5px 0; */
+  border: 1px solid black;
+  margin-left: 25px;
+  
+}
+#buttons-view{
+  margin: 25px 25px;
+
+ }
+ button.food {
+  cursor:pointer;
+  margin: 4px 2px;
+  /* float: left; */
+  display: block;
+  /* float: right; */
+ }
+ #food-form{
+   float: right;
+ }
+ .sidenav {
+float: right;
+height: 100%;
+width: 150px;
+position: absolute;
+z-index: 1;
+top: 0;
+left: 85%;
+background-image: url("./Images/marble.jpg"); 
+/* background-color: rgba(99, 72, 3, 0.5); */
+overflow-x: hidden;
+padding-top: 20px;
+}
+
+.sidenav a {
+padding: 6px 6px 6px 32px;
+text-decoration: none;
+font-size: 25px;
+color: #818181;
+display: block;
+}
+
+.sidenav a:hover {
+color: #f1f1f1;
+}
+
+.main {
+margin-left: 200px; 
+}
+#food-form,#food-view {
+margin: 0 auto;
+margin-bottom: 20px;
+}
+/* .sec1 {
+float: left;
+width: 77%;
+margin-left: 1%;
+} */
+
+.sec1 {
+    position: relative;
+    display: block;
+}
