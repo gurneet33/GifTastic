@@ -11,7 +11,6 @@ var foodRef;
 foodRef =  $(this).attr("data-name");
 
 
-
 //  URL
 var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +foodRef + "&api_key=Jx5HQQ2iUxEKCavBkuKcVI4yvipzVMRu&limit=10";
 
@@ -28,7 +27,8 @@ method: "GET"
 
       var p = $("<p>").text("Rating: " + rating);
 
-      foodImage = $('<img>',{ 'class': 'imgDisplay' });
+      foodImage = $('<img>');
+      foodImage.addClass("imgDisplay")
       foodImage.attr("src", results[i].images.fixed_height_still.url);
       foodImage.attr("data-still",results[i].images.fixed_height_still.url);
       foodImage.attr("data-animate",results[i].images.fixed_height.url);
