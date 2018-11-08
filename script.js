@@ -1,17 +1,18 @@
 // Initial array of foods
 var foods = ["Chicken", "Seafood", "Pasta","Steak"];
+var foodImage;
+var still;
 
 // Function for dumping the JSON content for each button into the div
 function displayfoodInfo() {
 var foodRef;
-  // YOUR CODE GOES HERE!!! HINT: You will need to create a new div to hold the JSON.
-//adding JSON
 
+  // for holding JSON
 foodRef =  $(this).attr("data-name");
-console.log(foodRef);
 
 
-// Here we construct our URL
+
+//  URL
 var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +foodRef + "&api_key=Jx5HQQ2iUxEKCavBkuKcVI4yvipzVMRu&limit=10";
 
 $.ajax({
@@ -19,8 +20,7 @@ url: queryURL,
 method: "GET"
 }) .then(function(response) {
     var results = response.data;
-
-      console.log(response); 
+      
     for (var i = 0; i < results.length; i++) {
       
       var gifDiv = $('<div>',{ 'class': 'displayDiv' });
@@ -28,9 +28,11 @@ method: "GET"
 
       var p = $("<p>").text("Rating: " + rating);
 
-      var foodImage = $("<img>");
-      foodImage.attr("src", results[i].images.fixed_height.url);
-
+      foodImage = $("<img>,{ 'class': 'imgDisplay' }");
+      foodImage.attr("src", results[i].images.fixed_height_still.url);
+      foodImage.attr("data-still",results[i].images.fixed_height_still.url);
+      foodImage.attr("data-animate",results[i].images.fixed_height.url);
+      foodImage.attr("data-state","still");
       
       gifDiv.prepend(foodImage);
       gifDiv.prepend(p);
@@ -44,14 +46,13 @@ method: "GET"
 function renderButtons() {
 
   // Deleting the buttons prior to adding new foods
-  // (this is necessary otherwise you will have repeat buttons)
+ 
   $("#buttons-view").empty();
 
   // Looping through the array of foods
   for (var i = 0; i < foods.length; i++) {
 
     // Then dynamicaly generating buttons for each food in the array
-    // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
     var a = $("<button>");
     // Adding a class of food to our button
     a.addClass("food");
@@ -61,6 +62,8 @@ function renderButtons() {
     a.text(foods[i]);
     // Adding the button to the buttons-view div
     $("#buttons-view").append(a);
+
+   
   }
 }
 
@@ -78,10 +81,27 @@ $("#add-food").on("click", function(event) {
   renderButtons();
 
 });
+ 
 
 // Generic function for displaying the foodInfo
 $(document).on("click", ".food", displayfoodInfo);
 
-// Calling the renderButtons function to display the intial buttons
 renderButtons();
 
+//when the gif image is pressed
+$("#food-view").on("click","img", function() {
+  still = $(this).attr("data-still");
+  anim = $(this).attr("data-animate");
+  state = $(this).attr("data-state");
+
+  //for animating still image
+  if(state==="still"){
+    $(this).attr("src",anim);
+    $(this).attr("data-state","animate");
+  }
+  //for making anomating image still
+  else if(state==="animate"){
+    $(this).attr("src",still);
+    $(this).attr("data-state","still")
+  }
+});
