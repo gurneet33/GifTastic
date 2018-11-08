@@ -1,5 +1,5 @@
 // Initial array of foods
-var foods = ["Chicken", "Seafood", "Pasta","Steak"];
+var foods = ["Chicken", "Seafood", "Pasta","Steak","Sushi","Teriyaki"];
 var foodImage;
 var still;
 
@@ -28,7 +28,7 @@ method: "GET"
 
       var p = $("<p>").text("Rating: " + rating);
 
-      foodImage = $("<img>,{ 'class': 'imgDisplay' }");
+      foodImage = $('<img>',{ 'class': 'imgDisplay' });
       foodImage.attr("src", results[i].images.fixed_height_still.url);
       foodImage.attr("data-still",results[i].images.fixed_height_still.url);
       foodImage.attr("data-animate",results[i].images.fixed_height.url);
