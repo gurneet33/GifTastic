@@ -80,6 +80,8 @@ $("#add-food").on("click", function(event) {
   // Calling renderButtons which handles the processing of our food array
   renderButtons();
 
+  //empty text-box after name name gets added
+  $("input[type=text], textarea").val("");
 });
  
 
